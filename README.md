@@ -32,6 +32,17 @@ Read **[COMPETITORS.md](COMPETITORS.md)** for the October 2026 sweep of the fiel
 permission and verification models, the review market's three tiers, the non-developer
 landscape, and the resulting prioritized steal list.
 
+## Repositories and site
+
+- **Code:** this repository — <https://github.com/Zabibu-Technika/ZabibuWeaver>
+- **Weaver site:** [`site/`](site/) — <https://zabibweaver.vercel.app>
+- **Arif Agent (multi-axis sibling):** <https://github.com/Zabibu-Technika/ArifAgent>
+- **Main Zabibu Technika website:** <https://github.com/Zabibu-Technika/zabibu> — <https://zabibu.vercel.app>
+
+Arif Agent is a separate repository, not a folder here. Clone it beside this one so its
+sync daemon can find `../ZabibuWeaver`; the site is deployed from `site/` with
+`vercel --prod --yes --project zabibweaver`.
+
 ## Quickstart
 
 **No key, no account, no config.** Weaver starts on a free keyless endpoint:

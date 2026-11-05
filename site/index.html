@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weaver — the coding agent that proves it's done</title>
+<meta name="description" content="Weaver is an open-source, local-first coding agent. It runs your project's checks, writes a proof receipt, remembers why decisions were made, and can undo what it changed.">
+<meta name="theme-color" content="#070708">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="ambient" aria-hidden="true">
+  <img src="assets/bg.jpg" srcset="assets/bg-sm.jpg 1100w, assets/bg.jpg 1920w" sizes="100vw" alt="">
+  <div class="veil"></div>
+</div>
+<div class="noise" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="./">
+      <img src="assets/logo.png" alt="">
+      <span class="brand-sep" aria-hidden="true"></span>
+      <span class="brand-product">Weaver<small>coding agent</small></span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#proof">Proof</a>
+      <a href="#difference">Difference</a>
+      <a href="#compare">Compare</a>
+      <a href="#start">Start</a>
+    </nav>
+    <div class="header-actions">
+      <a class="glow-button small" href="https://github.com/Zabibu-Technika/zabibu">GitHub <span class="arrow" aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="pulse-dot" aria-hidden="true"></span> Open source · Local first · Zero runtime dependencies</p>
+        <h1>The coding agent that <span class="text-gradient">proves</span> it's done.</h1>
+        <p class="lede">
+          Every agent can write code. Weaver runs your project's checks, writes a receipt a
+          stranger can inspect, remembers why a decision was made, and can undo what it changed.
+          It is narrow on purpose. It is deeper where it counts.
+        </p>
+        <div class="cta">
+          <a class="glow-button" href="#start">Get started <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="outline-button" href="#proof">See the proof</a>
+        </div>
+        <p class="hero-meta">Node 24+ <span>·</span> MIT <span>·</span> any model <span>·</span> no account required</p>
+      </div>
+
+      <div class="hero-visual">
+        <div class="terminal" aria-label="Example Weaver session">
+          <div class="terminal-bar"><span></span><span></span><span></span><span class="title">weaver — proof</span></div>
+          <pre><span class="dim">$</span> weaver
+<span class="grey">●</span> <span class="cyan">Read</span>(src/core/auth.ts)
+  <span class="ok">✓</span> <span class="dim">18ms</span>
+<span class="grey">●</span> <span class="cyan">Edit</span>(src/core/auth.ts)
+  <span class="ok">✓</span> <span class="dim">24ms</span>
+<span class="grey">●</span> <span class="cyan">Bash</span>(npm test)
+  <span class="ok">✓</span> <span class="dim">2.4s</span>
+
+<span class="amber">[ proof ]</span> <span class="ok">proved — 3/3 checks passed</span>
+<span class="dim">  .weaver/receipts/20261104T185800838-zbyxm.md</span></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stats-inner">
+      <div class="stat"><strong>MIT</strong><span>open source</span></div>
+      <div class="stat"><strong>0</strong><span>runtime deps</span></div>
+      <div class="stat"><strong>7+</strong><span>providers, any model</span></div>
+      <div class="stat"><strong>4 GB</strong><span>runs on a modest laptop</span></div>
+    </div>
+  </div>
+
+  <section id="proof" class="section">
+    <div class="section-head">
+      <p class="eyebrow">The gap</p>
+      <h2>Agents say <span class="text-gradient">“done”</span>. Almost none can show what that claim rests on.</h2>
+    </div>
+
+    <div class="grid three">
+      <article class="portal">
+        <div>
+          <div class="portal-top"><span class="tag teal">Runs the checks</span></div>
+          <h3>It runs the checks</h3>
+          <p>Package scripts, <code>tsc</code>, Cargo, Go. A failing check goes back to the model for one bounded repair pass, then the receipt says what actually happened.</p>
+        </div>
+      </article>
+      <article class="portal">
+        <div>
+          <div class="portal-top"><span class="tag amber">Independent</span></div>
+          <h3>It knows who wrote the judge</h3>
+          <p>If the turn edited a test, a test config, or the check command, the result is capped at <strong>partial</strong>. A green run you authored is not independent evidence.</p>
+        </div>
+      </article>
+      <article class="portal">
+        <div>
+          <div class="portal-top"><span class="tag purple">Leaves a record</span></div>
+          <h3>It leaves an artefact</h3>
+          <p>Commands, exit codes, timing, output digests, the Canary analysis id, and every path touched. Not the output itself — a failing test can print a secret.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="receipt" aria-label="Example proof receipt">
+      <div class="receipt-head">
+        <span class="badge ok">proved</span>
+        <span>2026-11-04 · 3 checks</span>
+      </div>
+      <table>
+        <thead><tr><th>check</th><th>result</th><th>exit</th><th>time</th></tr></thead>
+        <tbody>
+          <tr><td>typecheck</td><td class="ok">PASS</td><td>0</td><td>1.1s</td></tr>
+          <tr><td>test</td><td class="ok">PASS</td><td>0</td><td>2.4s</td></tr>
+          <tr><td>lint</td><td class="ok">PASS</td><td>0</td><td>0.8s</td></tr>
+        </tbody>
+      </table>
+      <p class="fine">sha256 bound · self-authored checks: no · canary analysis 9f2c…</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div id="difference" class="section">
+      <div class="section-head">
+        <p class="eyebrow">What is different</p>
+        <h2>Four things most agents <span class="text-gradient">still miss.</span></h2>
+      </div>
+      <div class="grid two">
+        <article class="portal">
+          <div>
+            <div class="portal-top"><span class="num">01</span><span class="tag">Memory</span></div>
+            <h3>Decision memory</h3>
+            <p>An append-only ledger of choices, rejections, constraints, and assumptions. Changing your mind supersedes an entry; it never deletes the reasoning trail. The active ones are injected into the prompt, bounded.</p>
+          </div>
+        </article>
+        <article class="portal">
+          <div>
+            <div class="portal-top"><span class="num">02</span><span class="tag">Reversible</span></div>
+            <h3>Undo that does not need git</h3>
+            <p>Content-addressed checkpoints before every mutation. It restores edits, deletes files the call created, and refuses to guess when the workspace sweep was truncated. No <code>git init</code> on a slow disk.</p>
+          </div>
+        </article>
+        <article class="portal">
+          <div>
+            <div class="portal-top"><span class="num">03</span><span class="tag amber">Pushback</span></div>
+            <h3>Scope pushback</h3>
+            <p>Before building, it reads the request for traps: a destructive verb aimed at a whole scope, credentials plus an outbound action, a dependency nobody asked for, three objectives bundled into one.</p>
+          </div>
+        </article>
+        <article class="portal featured">
+          <div>
+            <div class="portal-top"><span class="num">04</span><span class="tag purple">The gate</span></div>
+            <h3>A gate it cannot skip</h3>
+            <p>Canary judges every change deterministically, in-process, from a hash-pinned engine. There is no flag that lets the agent approve its own work. A human signs the receipt, or it stays blocked.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="compare" class="section">
+    <div class="section-head">
+      <p class="eyebrow">Honest comparison</p>
+      <h2>Weaver is narrower today. It is <span class="text-gradient">deeper</span> where it counts.</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead>
+          <tr><th scope="col">Capability</th><th class="us" scope="col">Weaver</th><th scope="col">OpenCode</th><th scope="col">Claude Code</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Deterministic judge on every change</td><td class="us yes">yes</td><td class="no">no</td><td class="no">no</td></tr>
+          <tr><td>Proof receipts with self-authored detection</td><td class="us yes">yes</td><td class="no">no</td><td class="no">no</td></tr>
+          <tr><td>Undo without a git repository</td><td class="us yes">yes</td><td>needs git</td><td class="no">no</td></tr>
+          <tr><td>Decision ledger, not just facts</td><td class="us yes">yes</td><td class="no">no</td><td class="partial">partial</td></tr>
+          <tr><td>Model freedom</td><td class="us yes">yes</td><td>yes</td><td>vendor</td></tr>
+          <tr><td>Zero runtime dependencies</td><td class="us yes">yes</td><td class="no">no</td><td>n/a</td></tr>
+          <tr><td>MCP, LSP, plugins, subagents</td><td class="us partial">roadmap</td><td>yes</td><td>yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fine">The last row is real. We are building breadth in the open, in order, without giving up the gate.</p>
+  </section>
+
+  <section class="band">
+    <div class="section">
+      <div class="section-head">
+        <p class="eyebrow">Built for the machines people actually have</p>
+        <h2>The network is not free. The grid is not steady. The laptop is <span class="text-gradient">not new.</span></h2>
+      </div>
+      <div class="grid three">
+        <article class="portal">
+          <div>
+            <div class="portal-top"><span class="tag purple">Language</span></div>
+            <h3>Language is not free either</h3>
+            <p>The same meaning costs a median <strong>1.88×</strong> more tokens in African languages on GPT-5's tokenizer — <strong>7.4×</strong> for Amharic, <strong>8.92×</strong> for N'Ko. Weaver's estimator charges non-Latin text honestly, so a context budget does not quietly run out.</p>
+          </div>
+        </article>
+        <article class="portal">
+          <div>
+            <div class="portal-top"><span class="tag amber">Power</span></div>
+            <h3>Power cuts are normal</h3>
+            <p>Both ledgers are JSONL with torn-write repair. A half-written line costs one entry, not the memory. Checkpoints are written before the change, not after.</p>
+          </div>
+        </article>
+        <article class="portal">
+          <div>
+            <div class="portal-top"><span class="tag teal">Workspace</span></div>
+            <h3>One base, outside the system</h3>
+            <p>Setup puts projects in one base workspace under your home directory. Writes resolve against it; <code>-C</code> is how you choose another. The agent does not default to your system files.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="manifesto">
+      <p class="eyebrow">The claim</p>
+      <h2>A green check you can <span class="text-gradient">inspect.</span></h2>
+      <p class="copy">Verification is not a status message. It is a file with commands, exit codes, and hashes that outlives the chat window. Read one before you trust one.</p>
+      <a class="glow-button" href="#proof">Read a receipt <span class="arrow" aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+
+  <section id="start" class="section start">
+    <div class="section-head center">
+      <p class="eyebrow">Quickstart</p>
+      <h2>No account. No key. <span class="text-gradient">No cloud required.</span></h2>
+    </div>
+    <pre class="code">git clone https://github.com/Zabibu-Technika/zabibu.git
+cd zabibu/"Zabibu Weaver"
+npm install
+npm start</pre>
+    <p class="fine">Node 24+. Setup detects your RAM, recommends a local model that fits, and can pull it with Ollama. Decline, and it still runs on a keyless free endpoint.</p>
+    <div class="cta">
+      <a class="glow-button" href="https://github.com/Zabibu-Technika/zabibu">View the source <span class="arrow" aria-hidden="true">↗</span></a>
+      <a class="outline-button" href="https://github.com/Zabibu-Technika/zabibu/blob/main/Zabibu%20Weaver/ROADMAP.md">Read the roadmap</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/logo.png" alt="Zabibu Technika">
+      <p>The open-source coding agent that proves its work. Built on one verified core, from Nairobi to the world.</p>
+      <p class="footer-loc">Nairobi, Kenya / East Africa</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-heading">Ecosystem</p>
+      <a href="https://zabibweaver.vercel.app">Weaver</a>
+      <a href="https://arifagent.vercel.app">Zabibu Arif</a>
+      <a href="https://zabibufikra.vercel.app">Fikra</a>
+    </div>
+    <div class="footer-col">
+      <p class="footer-heading">Product</p>
+      <a href="#proof">Proof</a>
+      <a href="#difference">Difference</a>
+      <a href="#compare">Compare</a>
+      <a href="#start">Quickstart</a>
+    </div>
+    <div class="footer-col">
+      <p class="footer-heading">Company</p>
+      <a href="https://zabibu.vercel.app">Zabibu Technika</a>
+      <a href="https://github.com/Zabibu-Technika/zabibu">GitHub</a>
+      <a href="https://github.com/Zabibu-Technika/zabibu/blob/main/Zabibu%20Weaver/LICENSE">MIT license</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Zabibu Technika. All rights reserved.</span>
+    <span class="mono">Designed from Nairobi.</span>
+  </div>
+</footer>
+</body>
+</html>

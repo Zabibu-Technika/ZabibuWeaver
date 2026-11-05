@@ -31,8 +31,8 @@
     "smoke:canary": "node scripts/smoke-canary.mjs",
     "smoke:tui": "node scripts/smoke-tui.mjs",
     "preview": "node scripts/render-preview.mjs",
-    "sync:arif-agent": "python \"../Arif Agent/sync-daemon.py\" --upstream .",
-    "sync:arif-agent:check": "python \"../Arif Agent/sync-daemon.py\" --upstream . --check",
+    "sync:arif-agent": "python \"../ArifAgent/sync-daemon.py\" --upstream .",
+    "sync:arif-agent:check": "python \"../ArifAgent/sync-daemon.py\" --upstream . --check",
     "verify": "node src/index.ts verify",
     "vendor:engine": "node scripts/vendor-engine.mjs",
     "mock": "node src/index.ts --provider mock --permission full --workspace ./.scratch --script ./scripts/mock-basic.json"
