@@ -61,7 +61,7 @@ Get-ChildItem Cert:\CurrentUser\TrustedPublisher | Where-Object Thumbprint -eq 8
 
 ## CI
 
-`.github/workflows/release-windows.yml` builds on a Windows runner. Set:
+The workflow template is [`release-windows.yml`](release-windows.yml). Copy it to `.github/workflows/release-windows.yml` after the GitHub token has the `workflow` scope. (The current `gh` session is `teh317`; the browser approval used `zabibutechnika`, so the scope could not be added.) It builds on a Windows runner. Set:
 
 - `WINDOWS_CERT_PFX_BASE64` — base64 of the PFX
 - `WINDOWS_CERT_PASSWORD` — its password
