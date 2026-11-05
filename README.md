@@ -91,6 +91,31 @@ node src/index.ts -p "add a health endpoint to server.ts"
 Node **22.18+** runs the TypeScript directly — there is no build step and no bundler.
 The runtime has **zero dependencies**. `npm install` is only needed for `npm run typecheck`.
 
+## Windows build (no Node required)
+
+`weaver.exe` is a self-contained Windows x64 build: a native launcher, the official Node 24
+runtime, and the app. Node does not need to be installed on the machine.
+
+- **Download:** [weaver-0.7.0-win-x64.zip](https://github.com/Zabibu-Technika/ZabibuWeaver/releases/latest/download/weaver-0.7.0-win-x64.zip)
+- **One-line install (PowerShell):**
+
+  ```powershell
+  irm https://raw.githubusercontent.com/Zabibu-Technika/ZabibuWeaver/main/packaging/install.ps1 | iex
+  ```
+
+- **Manual:** extract the zip, run `Install.cmd`, then `weaver`.
+
+The release publishes `SHA256SUMS.txt` and `release.json`. The launcher is Authenticode-signed
+with the Zabibu Technika development certificate; a publicly trusted certificate is the
+remaining step for SmartScreen trust on a clean machine. See
+[packaging/SIGNING.md](packaging/SIGNING.md).
+
+Build the package yourself:
+
+```powershell
+.\packaging\build-windows.ps1
+```
+
 ## The terminal UI
 
 The default interactive mode. Alternate screen, raw-mode input, a scrolling

@@ -4,3 +4,9 @@ node_modules/
 .scratch/
 *.log
 tsconfig.tsbuildinfo
+
+# Packaging output and private keys. The public .cer is committed.
+dist/
+packaging/certs/*.pfx
+packaging/certs/*.p12
+.weaver/
