@@ -1,0 +1,24 @@
+[
+  {
+    "toolCalls": [
+      {
+        "name": "write_file",
+        "arguments": {
+          "path": "hello.ts",
+          "content": "export const hello = (name: string): string => `hello, ${name}`;\n\nif (import.meta.url === `file://${process.argv[1]}`) {\n  console.log(hello(\"weaver\"));\n}\n"
+        }
+      }
+    ]
+  },
+  {
+    "toolCalls": [
+      {
+        "name": "read_file",
+        "arguments": { "path": "hello.ts" }
+      }
+    ]
+  },
+  {
+    "content": "Created `hello.ts` — a typed `hello()` helper that prints a greeting when run directly. Read it back to confirm the contents, and it looks right. Run `node hello.ts` to see it work."
+  }
+]

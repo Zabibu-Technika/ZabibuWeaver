@@ -1,0 +1,38 @@
+{
+  "name": "weaver",
+  "version": "0.5.1",
+  "private": true,
+  "type": "module",
+  "description": "Weaver — the local-first coding agent that signs off on its own work. Weaver builds the nest; Canary guards the mine. A Zabibu Technika product.",
+  "license": "MIT",
+  "author": "Tehillah Kachila",
+  "bin": {
+    "weaver": "./bin/weaver.mjs"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "start": "node src/index.ts",
+    "dev": "node --watch src/index.ts",
+    "setup": "node src/index.ts setup",
+    "providers": "node src/index.ts providers",
+    "models": "node src/index.ts models",
+    "typecheck": "tsc --noEmit",
+    "typecheck:engine": "tsc -p src/engine/tsconfig.json",
+    "test": "node --test",
+    "smoke": "node scripts/smoke.mjs",
+    "smoke:canary": "node scripts/smoke-canary.mjs",
+    "smoke:tui": "node scripts/smoke-tui.mjs",
+    "vendor:engine": "node scripts/vendor-engine.mjs",
+    "mock": "node src/index.ts --provider mock --permission full --workspace ./.scratch --script ./scripts/mock-basic.json"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "typescript": "^5.9.3"
+  }
+}

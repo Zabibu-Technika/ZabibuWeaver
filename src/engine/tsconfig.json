@@ -1,0 +1,27 @@
+{
+  // The vendored Canary engine, typechecked under ITS OWN rules.
+  //
+  // This file exists because the two projects disagree on exactly one option:
+  // Weaver enables `noUncheckedIndexedAccess`, Canary does not. The vendored files
+  // are byte-identical copies pinned by `provenance.json`, so Weaver cannot patch
+  // them into compliance — and it must not want to. The options below mirror
+  // `zabibu-canary/packages/engine/tsconfig.json` so the copy is checked the way
+  // its authors checked it.
+  //
+  //   npm run typecheck:engine
+  //
+  // The main `tsconfig.json` deliberately excludes these files: it checks Weaver's
+  // own code, this checks the dependency.
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["esnext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "types": ["node"]
+  },
+  "include": ["analyze.ts", "impact.ts", "plain.ts", "index.ts"]
+}
