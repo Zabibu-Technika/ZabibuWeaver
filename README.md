@@ -35,14 +35,14 @@ landscape, and the resulting prioritized steal list.
 ## Repositories and site
 
 - **Code:** this repository — <https://github.com/Zabibu-Technika/ZabibuWeaver>
-- **Weaver site:** [`site/`](site/) — <https://zabibweaver.vercel.app>
+- **Weaver site:** [`site/`](site/) — <https://zabibuweaver.vercel.app>
 - **Arif Agent (multi-axis sibling):** <https://github.com/Zabibu-Technika/ArifAgent>
 - **Fikra site and product hub:** <https://github.com/Zabibu-Technika/ZabibuFikra> — <https://zabibufikra.vercel.app>
 - **Company site:** <https://zabibu.vercel.app>
 
 Arif Agent is a separate repository, not a folder here. Clone it beside this one so its
 sync daemon can find `../ZabibuWeaver`; the site is deployed from `site/` with
-`vercel --prod --yes --project zabibweaver`.
+`vercel --prod --yes --project zabibuweaver`.
 
 ## Quickstart
 
