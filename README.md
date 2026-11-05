@@ -116,6 +116,9 @@ Build the package yourself:
 .\packaging\build-windows.ps1
 ```
 
+Measured release facts, package numbers, and the honest competitive position are in
+[BENCHMARKS.md](BENCHMARKS.md).
+
 ## The terminal UI
 
 The default interactive mode. Alternate screen, raw-mode input, a scrolling
