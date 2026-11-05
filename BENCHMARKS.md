@@ -44,8 +44,18 @@ cold run. A bundled or SEA build is the next optimization, not a claim we can ma
 - Verified the GitHub release asset's stored SHA256 digest matches the local build.
 - `install.ps1` installed into a custom directory and the installed `weaver.exe` ran.
 
-Not yet measured: real-model task success, SWE-bench or similar, long sessions, very large
-repositories, and behavior under a metered/slow network.
+### Real-model smoke task (one task, not a benchmark)
+
+- **Model:** Groq `openai/gpt-oss-120b`
+- **Task:** a failing `sum.test.ts`; fix `sum.ts` so `node --test` passes
+- **Result:** test PASS, only `sum.ts` touched, receipt verdict **proved**, self-authored
+  checks: **no**
+- **Wall time:** 125.5 s for the one-shot turn
+- **What this does not prove:** one task, one model, one run. It is a smoke test of the
+  packaged loop and the receipt path, not a SWE-bench or model-quality result.
+
+Not yet measured: broad model-quality comparisons, SWE-bench or similar, long sessions, very
+large repositories, and behavior under a metered/slow network.
 
 ## Competitive matrix
 
