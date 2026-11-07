@@ -1,0 +1,6 @@
+src/engine/analyze.ts text eol=lf
+src/engine/impact.ts text eol=lf
+src/engine/plain.ts text eol=lf
+legacy-zabibu-architect/src/engine/analyze.ts text eol=lf
+legacy-zabibu-architect/src/engine/impact.ts text eol=lf
+legacy-zabibu-architect/src/engine/plain.ts text eol=lf

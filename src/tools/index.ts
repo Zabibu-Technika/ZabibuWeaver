@@ -1,9 +1,10 @@
 // The tool registry — every capability the agent has, in one list.
 import type { ToolDef, ToolSchema } from "../core/types.ts";
+import { lspTools } from "../../core/lsp/index.ts";
 import { fileTools } from "./files.ts";
 import { shellTool } from "./shell.ts";
 
-export const allTools: ToolDef[] = [...fileTools, shellTool];
+export const allTools: ToolDef[] = [...fileTools, shellTool, ...lspTools];
 
 export function toSchemas(tools: ToolDef[]): ToolSchema[] {
   return tools.map((tool) => ({

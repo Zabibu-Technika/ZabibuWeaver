@@ -53,6 +53,46 @@ test("the package manager comes from the lockfile", async () => {
   });
 });
 
+test("a pytest configuration becomes a pytest check", async () => {
+  await withWorkspace(async (dir) => {
+    await writeFile(join(dir, "pytest.ini"), "[pytest]\ntestpaths = tests\n", "utf8");
+    await mkdir(join(dir, "tests"), { recursive: true });
+    await writeFile(join(dir, "tests", "test_app.py"), "def test_ok():\n    assert True\n", "utf8");
+
+    const checks = await detectChecks(dir);
+    assert.equal(checks.length, 1);
+    assert.equal(checks[0]?.name, "pytest");
+    assert.equal(checks[0]?.kind, "test");
+    assert.match(checks[0]?.command ?? "", /pytest -q/);
+    assert.equal(checks[0]?.source, "pytest configuration");
+  });
+});
+
+test("a conventional tests directory is enough for pytest", async () => {
+  await withWorkspace(async (dir) => {
+    await mkdir(join(dir, "tests"), { recursive: true });
+    await writeFile(join(dir, "tests", "test_app.py"), "def test_ok():\n    assert True\n", "utf8");
+
+    const checks = await detectChecks(dir);
+    assert.equal(checks.length, 1);
+    assert.equal(checks[0]?.name, "pytest");
+  });
+});
+
+test("a pyproject.toml pytest section is detected", async () => {
+  await withWorkspace(async (dir) => {
+    await writeFile(
+      join(dir, "pyproject.toml"),
+      "[tool.pytest.ini_options]\naddopts = \"-q\"\n",
+      "utf8",
+    );
+
+    const checks = await detectChecks(dir);
+    assert.equal(checks.length, 1);
+    assert.equal(checks[0]?.name, "pytest");
+  });
+});
+
 test("a TypeScript project without a typecheck script still gets typechecked", async () => {
   await withWorkspace(async (dir) => {
     await writeFile(join(dir, "package.json"), JSON.stringify({ scripts: {} }), "utf8");

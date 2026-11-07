@@ -708,6 +708,65 @@ async function remember(deps: AgentDeps, input: Parameters<typeof recordDecision
   }
 }
 
+export interface SubagentResult {
+  text: string;
+  toolCalls: number;
+  steps: number;
+}
+
+/**
+ * A read-only child loop. It gets a fresh context, a small read/search/LSP toolset, and a
+ * hard step budget. It cannot mutate the workspace, cannot spawn another subagent, and
+ * cannot write a receipt; the parent turn remains the unit of proof.
+ */
+export async function runSubagent(
+  deps: AgentDeps,
+  prompt: string,
+  options: { maxSteps?: number; role?: string } = {},
+): Promise<SubagentResult> {
+  const allowed = new Set(["read_file", "list_dir", "glob_files", "grep", "lsp"]);
+  const tools = deps.tools.filter((tool) => allowed.has(tool.name));
+  const config: WeaverConfig = {
+    ...deps.config,
+    permission: "readonly",
+    maxSteps: Math.max(1, Math.min(options.maxSteps ?? 6, deps.config.maxSteps)),
+  };
+  const state = newAgentState();
+  state.messages.push({ role: "user", content: prompt });
+
+  const schemas = toSchemas(tools);
+  const role = options.role ? ` You are acting as a ${options.role} subagent.` : "";
+  const system =
+    `${systemPrompt(config, schemas)}\n\n` +
+    "You are a read-only subagent. Investigate and report. Do not attempt to modify files. " +
+    "Return a concise summary with file paths and the evidence you found." +
+    role;
+
+  const subDeps: AgentDeps = {
+    ...deps,
+    config,
+    tools,
+    confirm: async () => "no",
+    emit: () => {},
+  };
+
+  await driveLoop(
+    subDeps,
+    state,
+    { mode: "readonly", confirm: async () => "no", alwaysAllow: new Set<string>() },
+    system,
+    schemas,
+  );
+
+  const text =
+    [...state.messages]
+      .reverse()
+      .find((message) => message.role === "assistant" && typeof message.content === "string" && message.content.trim().length > 0)
+      ?.content ?? "";
+  const toolCalls = state.messages.reduce((count, message) => count + (message.tool_calls?.length ?? 0), 0);
+  return { text: text.trim(), toolCalls, steps: state.messages.length };
+}
+
 export async function runTurn(deps: AgentDeps, state: AgentState, userInput: string): Promise<void> {
   const { config, tools, confirm, emit } = deps;
 

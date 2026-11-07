@@ -9,6 +9,8 @@ import { HELP, parseCliArgs } from "./cli/args.ts";
 import { isKeyMissing, loadConfig, WEAVER_ROOT, type WeaverConfig } from "./config.ts";
 import { createProvider } from "./providers/index.ts";
 import { allTools } from "./tools/index.ts";
+import { createSubagentTool } from "./tools/subagent.ts";
+import { loadMcpTools } from "../core/mcp/index.ts";
 import { newAgentState, runTurn } from "./core/agent.ts";
 import { askConfirm, newSessionMeta, startRepl } from "./cli/repl.ts";
 import { loadSession, newSessionId, saveSession } from "./core/session.ts";
@@ -162,6 +164,9 @@ async function main(): Promise<void> {
   }
 
   const provider = createProvider(config);
+  const mcpTools = await loadMcpTools(config.workspace, config.home);
+  const baseTools = [...allTools, ...mcpTools];
+  const tools = [...baseTools, createSubagentTool({ provider, config, tools: baseTools })];
   const state = newAgentState();
   let meta = newSessionMeta(config, newSessionId());
 
@@ -194,7 +199,7 @@ async function main(): Promise<void> {
 
     render.assistantStart();
     await runTurn(
-      { config, provider, tools: allTools, confirm, emit: render.renderEvent },
+      { config, provider, tools, confirm, emit: render.renderEvent },
       state,
       args.prompt,
     );
@@ -214,7 +219,7 @@ async function main(): Promise<void> {
     if (!tuiSupported() && args.tui) {
       render.warn("this terminal is too small for the TUI — falling back to the plain session.");
     } else {
-      await runTui({ config, provider, tools: allTools, state, meta });
+      await runTui({ config, provider, tools, state, meta });
       return;
     }
   }
@@ -227,7 +232,7 @@ async function main(): Promise<void> {
     `/help for commands · /exit to leave`,
   ]);
 
-  await startRepl({ config, provider, tools: allTools, state, meta, emit: render.renderEvent });
+  await startRepl({ config, provider, tools, state, meta, emit: render.renderEvent });
 }
 
 await main();

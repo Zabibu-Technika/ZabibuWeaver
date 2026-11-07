@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Weaver — open-source coding agent. Proof, not promises.</title>
-<meta name="description" content="Weaver is the open-source, local-first coding agent that proves its work: a deterministic gate, inspectable proof receipts, decision memory, undo without git, and a signed Windows build. MIT licensed, zero runtime dependencies.">
+<meta name="description" content="Weaver is the open-source, local-first coding agent that proves its work: a deterministic gate, inspectable proof receipts, decision memory, undo without git, and a signed Windows build. MIT licensed, zero runtime npm dependencies.">
 <meta name="theme-color" content="#070907">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23ff7a18'/%3E%3Ctext x='32' y='46' font-family='monospace' font-size='40' font-weight='bold' text-anchor='middle' fill='%23160c02'%3EW%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,6 +26,7 @@
       </span>
     </a>
     <nav class="nav" aria-label="Primary">
+      <a href="#tui">TUI</a>
       <a href="#capabilities">Capabilities</a>
       <a href="#proof">Proof</a>
       <a href="#open-source">Open source</a>
@@ -44,7 +45,7 @@
     <div class="hero-ticker" aria-hidden="true">
       <span>OPEN SOURCE</span><span>//</span>
       <span>MIT</span><span>//</span>
-      <span>ZERO RUNTIME DEPS</span><span>//</span>
+      <span>ZERO NPM DEPS</span><span>//</span>
       <span>WINDOWS X64</span><span>//</span>
       <span>ANY MODEL</span>
     </div>
@@ -94,7 +95,7 @@
           <p class="kicker">Open source / no asterisks</p>
           <h2 class="pixel">OWN THE AGENT.</h2>
         </div>
-        <p class="acid-num">MIT · 0 RUNTIME DEPS · ANY MODEL</p>
+        <p class="acid-num">MIT · 0 NPM RUNTIME DEPS · ANY MODEL</p>
       </div>
 
       <div class="acid-grid">
@@ -105,13 +106,13 @@
         </div>
         <div>
           <span class="acid-num">02 / DEPENDENCIES</span>
-          <h3>Zero runtime deps</h3>
-          <p>No runtime npm dependencies. One Windows download includes Node 24. There is no supply chain between you and the agent.</p>
+          <h3>Zero npm deps</h3>
+          <p>No runtime npm dependencies. One Windows download includes Node 24. The agent itself has no package tree to trust.</p>
         </div>
         <div>
           <span class="acid-num">03 / MODELS</span>
           <h3>Any model</h3>
-          <p>Groq, Gemini, OpenAI, OpenRouter, Together, Ollama, or the keyless default. Your machine, your model, your data.</p>
+          <p>Groq, Gemini, OpenAI, OpenRouter, Together, Ollama, or the keyless default. Run local with Ollama, or bring your own key.</p>
         </div>
       </div>
 
@@ -122,9 +123,63 @@
     </div>
   </section>
 
+  <section id="tui" class="section">
+    <div class="section-head">
+      <p class="kicker">The terminal UI / 01</p>
+      <h2 class="pixel">IT LIVES IN YOUR TERMINAL.<br><span class="gradient">NOT A CHAT TAB.</span></h2>
+      <p class="copy">
+        An interactive browser demo of the real command surface: type a task, approve or deny
+        a write, inspect the proof receipt, then undo the change. The sandbox runs nothing on
+        your machine; the real binary is the Windows download below.
+      </p>
+    </div>
+
+    <div class="tui-shell tui-live" id="weaver-demo">
+      <div class="tui-bar">
+        <span class="dot red"></span><span class="dot amber"></span><span class="dot green"></span>
+        <span class="term-title">weaver — tui</span>
+        <span class="tui-badge">Interactive demo</span>
+      </div>
+
+      <div class="tui-live-body">
+        <div class="tui-transcript" id="tui-transcript" role="log" aria-live="polite" aria-label="Weaver demo terminal output"></div>
+
+        <div class="tui-input-row">
+          <label class="sr-only" for="tui-input">Weaver demo command</label>
+          <span class="tui-prompt" aria-hidden="true">you ›</span>
+          <input id="tui-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type a task or /help" aria-label="Weaver demo command">
+          <span class="tui-input-hint" aria-hidden="true">enter</span>
+        </div>
+
+        <div class="tui-statusbar">
+          <span id="tui-status-left">enter send · /help · ↑↓ history</span>
+          <span id="tui-status-right">groq/gpt-oss-120b · auto · canary auto</span>
+        </div>
+
+        <div class="tui-palette" id="tui-palette" hidden aria-label="Command palette"></div>
+      </div>
+
+      <div class="tui-controls">
+        <button class="tui-chip" type="button" data-demo="fix">Fix a failing test</button>
+        <button class="tui-chip" type="button" data-demo="test">Write a test</button>
+        <button class="tui-chip" type="button" data-demo="scope">Scope trap</button>
+        <button class="tui-chip" type="button" data-demo="lsp">LSP + MCP</button>
+        <button class="tui-chip" type="button" data-demo="subagent">Subagent</button>
+        <button class="tui-chip" type="button" data-demo="checkpoints">Checkpoints + undo</button>
+        <button class="tui-chip" type="button" data-demo="integrations">Accounts</button>
+        <button class="tui-chip" type="button" data-demo="reset">Reset</button>
+        <span class="tui-hint">sandbox · no code executes</span>
+      </div>
+    </div>
+    <p class="fine tui-demo-note">
+      Interactive demo · no code executes · commands mirror the real TUI and CLI.
+      The real agent runs from the Windows download.
+    </p>
+  </section>
+
   <section id="capabilities" class="section">
     <div class="section-head">
-      <p class="kicker">What it does / 01</p>
+      <p class="kicker">What it does / 02</p>
       <h2 class="pixel">MORE THAN A CHAT.<br><span class="gradient">A WORKING LOOP.</span></h2>
       <p class="copy">
         Weaver does the whole loop: read, edit, search, run, verify. Then it leaves evidence.
@@ -136,7 +191,7 @@
       <article class="cap">
         <span class="cap-num">01</span>
         <h3>Read / edit / search / run</h3>
-        <p>A real tool loop over your repo. Inspect, change, and execute — with a permission gate on every mutating step.</p>
+        <p>A real tool loop over your repo. Inspect, change, and execute — with permission modes you choose: auto asks, full is explicit, readonly never writes.</p>
       </article>
       <article class="cap">
         <span class="cap-num">02</span>
@@ -146,7 +201,7 @@
       <article class="cap">
         <span class="cap-num">03</span>
         <h3>Write a proof receipt</h3>
-        <p>Commands, exit codes, timing, output digests, and every path touched. A stranger can inspect it. The output itself is never stored.</p>
+        <p>Commands, exit codes, timing, output digests, and every path it wrote or edited. A stranger can inspect it. The output itself is never stored.</p>
       </article>
       <article class="cap">
         <span class="cap-num">04</span>
@@ -161,19 +216,34 @@
       <article class="cap">
         <span class="cap-num">06</span>
         <h3>Push back on scope</h3>
-        <p>Destructive verbs, credentials plus an outbound action, surprise dependencies, three objectives in one. It asks before it acts.</p>
+        <p>Destructive verbs, credentials plus an outbound action, surprise dependencies, three objectives in one. It names the trap before it acts.</p>
       </article>
     </div>
 
     <div class="also">
       <span>ALSO</span>
-      <p>Context compaction · GitHub and Vercel account switching · local Ollama · keyless default · proof receipts on every turn.</p>
+      <p>Context compaction · LSP diagnostics · MCP tools · read-only subagents · GitHub and Vercel account switching · local Ollama · keyless default · proof receipts on every change.</p>
+    </div>
+
+    <div class="core-strip">
+      <div>
+        <span class="core-label">LSP</span>
+        <p>Diagnostics, definitions, references, and hover through your language server. Read-only by contract; the agent never installs a server silently.</p>
+      </div>
+      <div>
+        <span class="core-label">MCP</span>
+        <p>Configured MCP servers become namespaced tools. Unknown tools default to asking, and every result is marked external.</p>
+      </div>
+      <div>
+        <span class="core-label">SUBAGENTS</span>
+        <p>Fresh, bounded child contexts for research and review. Read-only tools, a hard step budget, and no second pair of hands on your files.</p>
+      </div>
     </div>
   </section>
 
   <section id="proof" class="section">
     <div class="section-head">
-      <p class="kicker">Proof / 02</p>
+      <p class="kicker">Proof / 03</p>
       <h2 class="pixel">A GREEN CHECK IS NOT EVIDENCE.<br><span class="gradient">THIS IS.</span></h2>
       <p class="copy">
         Other agents say done. Weaver writes a file with commands, exit codes, hashes, and the
@@ -211,8 +281,8 @@
           <p>If the turn edited a test, a test config, or the check command, the result is <strong>partial</strong>. A green run you authored is not independent evidence.</p>
         </div>
         <div class="proof-point">
-          <h3>A human signs, or it stays blocked</h3>
-          <p>The receipt is the permission slip. Weaver can be judged; it cannot sign its own.</p>
+          <h3>Critical findings need a human signature</h3>
+          <p>If Canary finds a critical issue, the turn stays blocked until a human signs the approval ledger. Weaver can be judged; it cannot sign its own.</p>
         </div>
         <p class="pull"><span>“</span>Trust is a file you can read.<span>”</span></p>
       </div>
@@ -221,7 +291,7 @@
 
   <section id="compare" class="section">
     <div class="section-head">
-      <p class="kicker">The field / 03</p>
+      <p class="kicker">The field / 04</p>
       <h2 class="pixel">THE BIG AGENTS ARE WIDER.<br><span class="gradient">WEAVER IS DEEPER.</span></h2>
       <p class="copy">
         OpenCode, Claude Code, Codex, Cursor, Gemini CLI. More surface area. None of them ships
@@ -245,41 +315,41 @@
         </thead>
         <tbody>
           <tr><td>Deterministic gate on every change</td><td class="us yes">yes</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td class="no">no</td></tr>
-          <tr><td>Proof receipt per turn</td><td class="us yes">yes</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td class="no">no</td></tr>
+          <tr><td>Proof receipt on changes</td><td class="us yes">yes</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td class="no">no</td></tr>
           <tr><td>Decision ledger</td><td class="us yes">yes</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td class="no">no</td></tr>
           <tr><td>Undo without git</td><td class="us yes">yes</td><td class="partial">partial</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td class="no">no</td></tr>
           <tr><td>Zero runtime npm deps</td><td class="us yes">yes</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td class="no">no</td></tr>
           <tr><td>Model freedom</td><td class="us yes">yes</td><td class="yes">yes</td><td class="no">no</td><td class="partial">partial</td><td class="no">no</td><td class="partial">partial</td></tr>
           <tr><td>Multi-account switching</td><td class="us yes">yes</td><td class="no">no</td><td class="partial">partial</td><td class="no">no</td><td class="no">no</td><td class="no">no</td></tr>
-          <tr><td>LSP / MCP / subagents</td><td class="us partial">roadmap</td><td class="yes">yes</td><td class="yes">yes</td><td class="yes">yes</td><td class="yes">yes</td><td class="yes">yes</td></tr>
+          <tr><td>LSP / MCP / subagents</td><td class="us yes">yes</td><td class="yes">yes</td><td class="yes">yes</td><td class="yes">yes</td><td class="yes">yes</td><td class="yes">yes</td></tr>
         </tbody>
       </table>
     </div>
     <p class="fine">
-      Public documentation, November 2026. Not a benchmark. The last row is real: we are
-      building breadth in the open, without giving up the gate.
+      LSP and MCP require a configured server; subagents are built in and read-only.
+      Public documentation, November 2026. Not a benchmark.
       <a href="https://github.com/Zabibu-Technika/ZabibuWeaver/blob/main/BENCHMARKS.md">Read the measured limits</a>.
     </p>
   </section>
 
   <section id="download" class="section">
     <div class="section-head">
-      <p class="kicker">Windows x64 / 04</p>
-      <h2 class="pixel">DOWNLOAD WEAVER <span class="gradient">0.7.0.</span></h2>
+      <p class="kicker">Windows x64 / 05</p>
+      <h2 class="pixel">DOWNLOAD WEAVER <span class="gradient">0.8.0.</span></h2>
       <p class="copy">Self-contained. Node 24 included. No installer framework, no account, no key.</p>
     </div>
 
     <div class="download-panel">
       <div class="download-copy">
         <div class="download-meta">
-          <span class="tag paper">weaver-0.7.0-win-x64.zip</span>
+          <span class="tag paper">weaver-0.8.0-win-x64.zip</span>
           <span class="tag">33.8 MB</span>
           <span class="tag orange">SHA256 published</span>
           <span class="tag">Signed · dev cert*</span>
         </div>
         <div class="actions">
-          <a class="btn btn-orange" href="https://github.com/Zabibu-Technika/ZabibuWeaver/releases/latest/download/weaver-0.7.0-win-x64.zip">Download .zip <span aria-hidden="true">↗</span></a>
-          <a class="btn" href="https://github.com/Zabibu-Technika/ZabibuWeaver/releases/tag/v0.7.0">Release notes</a>
+          <a class="btn btn-orange" href="https://github.com/Zabibu-Technika/ZabibuWeaver/releases/latest/download/weaver-0.8.0-win-x64.zip">Download .zip <span aria-hidden="true">↗</span></a>
+          <a class="btn" href="https://github.com/Zabibu-Technika/ZabibuWeaver/releases/tag/v0.8.0">Release notes</a>
         </div>
         <p class="fine">
           * Signed with the Zabibu Technika development certificate. A publicly trusted
@@ -288,7 +358,7 @@
           · <a href="https://github.com/Zabibu-Technika/ZabibuWeaver/releases/latest/download/SHA256SUMS.txt">SHA256</a>.
         </p>
         <p class="fine">
-          Release checks: 370 tests (368 pass, 2 skipped), typecheck clean, packaged one-shot
+          Release checks: 385 tests (383 pass, 2 skipped), typecheck clean, packaged one-shot
           write + proof receipt.
           <a href="https://github.com/Zabibu-Technika/ZabibuWeaver/blob/main/BENCHMARKS.md">Benchmarks and limits</a>.
         </p>
@@ -307,7 +377,7 @@ weaver</pre>
   <section id="start" class="section">
     <div class="source-panel">
       <div>
-        <p class="kicker">Build from source / 05</p>
+        <p class="kicker">Build from source / 06</p>
         <h2 class="pixel">READ IT. RUN IT. <span class="gradient">FORK IT.</span></h2>
         <p class="copy">
           The whole agent is in the repository. Node 24+. No account or key required;
@@ -360,5 +430,6 @@ npm start</pre>
     <span>Designed from Nairobi.</span>
   </div>
 </footer>
+<script src="tui-live.js"></script>
 </body>
 </html>

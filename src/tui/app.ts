@@ -55,9 +55,12 @@ const TOOL_LABELS: Record<string, string> = {
   glob_files: "Glob",
   grep: "Grep",
   run_shell: "Bash",
+  lsp: "LSP",
+  subagent: "Subagent",
 };
 
 function toolLabel(name: string): string {
+  if (name.startsWith("mcp__")) return "MCP";
   return TOOL_LABELS[name] ?? name;
 }
 

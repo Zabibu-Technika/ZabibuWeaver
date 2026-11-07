@@ -15,16 +15,16 @@ reviewed by the same engine before the turn is done.
 
 ## Status
 
-`v0.7.0` — a working core with a real terminal UI, a self-contained sign-off, a judge
+`v0.8.0` — a working core with a real terminal UI, a self-contained sign-off, a judge
 that fails closed, **verification before "done", proof receipts, a decision ledger,
-reversible file changes, scope pushback, and context compaction**. The loop runs, the
-tools work, the permission gate works, sessions persist, the sign-off fires against the
-vendored engine, and the TUI streams, scrolls, and prompts inline.
+reversible file changes, scope pushback, context compaction, LSP diagnostics, MCP tools, and
+read-only subagents**. The loop runs, the tools work, the permission gate works, sessions
+persist, the sign-off fires against the vendored engine, and the TUI streams, scrolls, and
+prompts inline.
 
-What it does **not** yet have: an LSP, sub-agents, MCP, a plugin API, a server/API, a
-live cost meter, or lineage analysis. See **[ROADMAP.md](ROADMAP.md)** for the full
-tracker — including the African-realities and self-dependence workstreams — and
-[Limitations](#limitations).
+What it does **not** yet have: a plugin API, a server/API, a live cost meter, or lineage
+analysis. See **[ROADMAP.md](ROADMAP.md)** for the full tracker — including the
+African-realities and self-dependence workstreams — and [Limitations](#limitations).
 
 Read **[EDGE.md](EDGE.md)** for what actually makes this different from opencode, Claude
 Code and Codex — and the rule that follows from it for what gets built next.
@@ -96,7 +96,7 @@ The runtime has **zero dependencies**. `npm install` is only needed for `npm run
 `weaver.exe` is a self-contained Windows x64 build: a native launcher, the official Node 24
 runtime, and the app. Node does not need to be installed on the machine.
 
-- **Download:** [weaver-0.7.0-win-x64.zip](https://github.com/Zabibu-Technika/ZabibuWeaver/releases/latest/download/weaver-0.7.0-win-x64.zip)
+- **Download:** [weaver-0.8.0-win-x64.zip](https://github.com/Zabibu-Technika/ZabibuWeaver/releases/latest/download/weaver-0.8.0-win-x64.zip)
 - **One-line install (PowerShell):**
 
   ```powershell
@@ -118,6 +118,38 @@ Build the package yourself:
 
 Measured release facts, package numbers, and the honest competitive position are in
 [BENCHMARKS.md](BENCHMARKS.md).
+
+## LSP, MCP, and subagents
+
+- **LSP** — the `lsp` tool asks a language server for diagnostics, definitions, references,
+  or hover. It is read-only, and it never installs a server. Point `.weaver/lsp.json` at one:
+
+  ```json
+  {
+    "servers": [
+      { "name": "typescript", "command": "typescript-language-server", "args": ["--stdio"], "extensions": [".ts", ".tsx"] }
+    ]
+  }
+  ```
+
+- **MCP** — `.weaver/mcp.json` names the servers you trust. Their tools appear as
+  `mcp__<server>__<tool>`. Only tools that declare `readOnlyHint` are treated as read-only;
+  everything else defaults to `unbounded` and goes through the permission gate. Results are
+  marked `external`.
+
+  ```json
+  {
+    "servers": {
+      "filesystem": { "command": "npx", "args": ["-y", "@modelcontextprotocol/server-filesystem", "."] }
+    }
+  }
+  ```
+
+- **Subagents** — the `subagent` tool runs a fresh, read-only child loop with read, list,
+  glob, grep, and LSP tools, plus a six-step budget. It cannot write, cannot spawn another
+  subagent, and does not write a receipt; the parent turn remains the unit of proof.
+
+Use `/tools` in the TUI to see the live toolset, including MCP tools discovered at startup.
 
 ## The terminal UI
 

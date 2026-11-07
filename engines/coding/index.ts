@@ -25,7 +25,7 @@ export const CODING_ENGINE: EngineManifest = {
   axis: "mono",
   description:
     "Elite software engineering: read, edit, search, run, verify. Narrow on purpose — the value is depth and a deterministic gate, not breadth.",
-  tools: ["read_file", "write_file", "edit_file", "list_dir", "glob_files", "grep", "run_shell"],
+  tools: ["read_file", "write_file", "edit_file", "list_dir", "glob_files", "grep", "run_shell", "lsp", "subagent"],
   requiresVerification: true,
   externalActions: ["run_shell"],
 };

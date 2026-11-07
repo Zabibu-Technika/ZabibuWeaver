@@ -7,17 +7,17 @@
 //
 // WHAT WE WILL AND WILL NOT RUN
 //
-// Detection reads the project's manifest (package.json scripts, Cargo.toml, go.mod) and
-// constructs a fixed command from a *script name*. The model never supplies a command
-// here. That matters: a verification gate that executes model-authored strings is just a
-// shell tool with better branding.
+// Detection reads the project's manifest (package.json scripts, Cargo.toml, go.mod, or a
+// pytest configuration) and constructs a fixed command from a known runner. The model never
+// supplies a command here. That matters: a verification gate that executes model-authored
+// strings is just a shell tool with better branding.
 //
 // Note the residual risk, stated rather than hidden: `npm run test` also runs the
 // project's `pretest`/`posttest` scripts, which could do anything the user account can.
 // That is the same trust the user already extends by running the project themselves, and
 // the Canary gate is what judges a change to those scripts.
 import { spawn } from "node:child_process";
-import { access, readFile } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
 import { join, resolve } from "node:path";
 
 export type CheckKind = "typecheck" | "test" | "lint" | "build";
@@ -70,6 +70,43 @@ async function packageManager(workspace: string): Promise<string> {
   if (await exists(join(workspace, "yarn.lock"))) return "yarn";
   if (await exists(join(workspace, "bun.lockb"))) return "bun";
   return "npm";
+}
+
+/**
+ * A Python project is a pytest project when it declares pytest in a config file, or when it
+ * has a conventional tests directory with Python test files. We do not guess from `*.py`
+ * files at the root: a utility script is not a test suite.
+ */
+async function hasPytest(workspace: string): Promise<boolean> {
+  if (await exists(join(workspace, "pytest.ini"))) return true;
+  if (await exists(join(workspace, "conftest.py"))) return true;
+
+  for (const [file, marker] of [
+    ["pyproject.toml", /\[tool\.pytest/],
+    ["setup.cfg", /\[tool:pytest\]/],
+    ["tox.ini", /\[pytest\]/],
+  ] as const) {
+    const path = join(workspace, file);
+    if (!(await exists(path))) continue;
+    try {
+      if (marker.test(await readFile(path, "utf8"))) return true;
+    } catch {
+      // An unreadable config is not a reason to skip a tests directory that may exist.
+    }
+  }
+
+  for (const directory of ["tests", "test"]) {
+    const path = join(workspace, directory);
+    if (!(await exists(path))) continue;
+    try {
+      const entries = await readdir(path, { withFileTypes: true });
+      if (entries.some((entry) => entry.isFile() && entry.name.endsWith(".py"))) return true;
+    } catch {
+      // Keep looking.
+    }
+  }
+
+  return false;
 }
 
 const SCRIPT_ALIASES: Array<{ kind: CheckKind; names: string[] }> = [
@@ -131,6 +168,14 @@ export async function detectChecks(workspace: string): Promise<Check[]> {
   }
   if (await exists(join(root, "go.mod"))) {
     checks.push({ name: "go test", kind: "test", command: "go test ./...", source: "go.mod" });
+  }
+  if (await hasPytest(root)) {
+    checks.push({
+      name: "pytest",
+      kind: "test",
+      command: process.platform === "win32" ? "python -m pytest -q" : "python3 -m pytest -q",
+      source: "pytest configuration",
+    });
   }
 
   // Deduplicate by command: a project with both a `test` script and a test runner
