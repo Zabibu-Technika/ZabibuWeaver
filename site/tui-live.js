@@ -93,7 +93,7 @@
   function welcome() {
     transcript.innerHTML = "";
     append(
-      '<span class="tui-brand">WEAVER</span> <span class="dim">v0.8.0 · the local-first coding agent</span>',
+      '<span class="tui-brand">WEAVER</span> <span class="dim">v0.8.1 · the local-first coding agent</span>',
       "heading",
     );
     append(
@@ -358,7 +358,7 @@
       case "about":
         block(
           [
-            "Weaver 0.8.0 — MIT — github.com/Zabibu-Technika/ZabibuWeaver",
+            "Weaver 0.8.1 — MIT — github.com/Zabibu-Technika/ZabibuWeaver",
             "zero runtime npm dependencies · one Windows download includes Node 24",
             "no account · no vendor model · local-first",
           ].join("\n"),

@@ -1,19 +1,19 @@
 # Release benchmarks and competitive position
 
 Measured **2026-11-05** on Windows 11 Pro (10.0.26220), Intel Core i5-6300U
-(2 cores / 4 threads), 7.8 GB RAM. These are release facts for **Weaver v0.8.0**,
+(2 cores / 4 threads), 7.8 GB RAM. These are release facts for **Weaver v0.8.1**,
 not a model-quality benchmark.
 
 ## Release facts
 
 | Item | Value |
 |---|---|
-| Version | 0.8.0 |
-| Windows package | `weaver-0.8.0-win-x64.zip` |
-| Zip size | 35,444,810 bytes (33.8 MB) |
+| Version | 0.8.1 |
+| Windows package | `weaver-0.8.1-win-x64.zip` |
+| Zip size | 35,446,265 bytes (33.8 MB) |
 | Installed size | 87.7 MB |
 | Bundled runtime | Node v24.14.1 |
-| SHA256 | `dfaac7db1844931f89706b8d1a8a26b225d280e981d4345505311963505cd001` |
+| SHA256 | `2eb3acc4c5bd167892708416bd15ba75c99f9efb8401bb7f02c4c503de163778` |
 | Signature | Authenticode, Zabibu Technika development certificate |
 | Tests | 385 total · 383 pass · 2 skipped |
 | Test duration | 34,958 ms |
@@ -36,7 +36,7 @@ cold run. A bundled or SEA build is the next optimization, not a claim we can ma
 
 ## End-to-end checks on the packaged build
 
-- Extracted the release zip and ran `weaver.exe --version` → `0.8.0`.
+- Extracted the release zip and ran `weaver.exe --version` → `0.8.1`.
 - Ran a one-shot mock turn against a clean workspace:
   - wrote `hello.ts`
   - created a content-addressed checkpoint
@@ -119,5 +119,5 @@ npm run typecheck
 .\packaging\build-windows.ps1
 ```
 
-Then extract `dist\weaver-0.8.0-win-x64.zip`, run `weaver.exe --version`, and compare the
+Then extract `dist\weaver-0.8.1-win-x64.zip`, run `weaver.exe --version`, and compare the
 zip hash with `dist\SHA256SUMS.txt`.

@@ -15,7 +15,7 @@ reviewed by the same engine before the turn is done.
 
 ## Status
 
-`v0.8.0` — a working core with a real terminal UI, a self-contained sign-off, a judge
+`v0.8.1` — a working core with a real terminal UI, a self-contained sign-off, a judge
 that fails closed, **verification before "done", proof receipts, a decision ledger,
 reversible file changes, scope pushback, context compaction, LSP diagnostics, MCP tools, and
 read-only subagents**. The loop runs, the tools work, the permission gate works, sessions
@@ -96,7 +96,7 @@ The runtime has **zero dependencies**. `npm install` is only needed for `npm run
 `weaver.exe` is a self-contained Windows x64 build: a native launcher, the official Node 24
 runtime, and the app. Node does not need to be installed on the machine.
 
-- **Download:** [weaver-0.8.0-win-x64.zip](https://github.com/Zabibu-Technika/ZabibuWeaver/releases/latest/download/weaver-0.8.0-win-x64.zip)
+- **Download:** [weaver-0.8.1-win-x64.zip](https://github.com/Zabibu-Technika/ZabibuWeaver/releases/latest/download/weaver-0.8.1-win-x64.zip)
 - **One-line install (PowerShell):**
 
   ```powershell

@@ -17,6 +17,9 @@ const COMMANDS = new Set([
   "verify",
   "receipts",
   "integrations",
+  "lsp",
+  "mcp",
+  "subagent",
   "help",
   "version",
 ]);
@@ -138,6 +141,9 @@ export const HELP = `
     weaver verify                run the project's own checks now
     weaver receipts              proof artifacts: what ran, what passed, what did not
     weaver integrations          GitHub / Vercel accounts this workspace can use
+    weaver lsp <action> <file>   diagnostics, definition, references, or hover
+    weaver mcp list|call         configured MCP servers and tools
+    weaver subagent "<prompt>"   read-only research in a fresh child context
 
   options:
     -p, --prompt <text>          the task to run (otherwise interactive)

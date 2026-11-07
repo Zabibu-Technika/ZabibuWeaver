@@ -14,6 +14,8 @@ import {
 } from "../../core/memory/decisions.ts";
 import { detectChecks, runChecks, summarize as summarizeVerification } from "../../core/verification/index.ts";
 import { activeAccount, detectIntegrations, switchAccount } from "../../core/integrations/index.ts";
+import { lspTool } from "../../core/lsp/tool.ts";
+import { callMcpTool, mcpStatus } from "../../core/mcp/index.ts";
 import {
   listReceipts,
   receiptsDir,
@@ -643,6 +645,84 @@ export async function showIntegrations(
 
   console.log("");
   console.log(render.C.gray + "  switch with: weaver integrations use <id> <account>" + render.C.reset);
+  console.log("");
+  return 0;
+}
+
+// --- LSP / MCP / subagent ------------------------------------------------
+
+export async function lspCommand(cfg: WeaverConfig, args: string[]): Promise<number> {
+  const [action, path, line, character] = args;
+  if (action === undefined || path === undefined) {
+    render.error("usage: weaver lsp <diagnostics|definition|references|hover> <file> [line] [character]");
+    return 1;
+  }
+  const result = await lspTool.run(
+    {
+      action,
+      path,
+      line: line === undefined ? undefined : Number(line),
+      character: character === undefined ? undefined : Number(character),
+    },
+    { workspace: cfg.workspace },
+  );
+  if (result.ok) console.log(result.output);
+  else render.error(result.output);
+  return result.ok ? 0 : 1;
+}
+
+export async function mcpCommand(cfg: WeaverConfig, args: string[]): Promise<number> {
+  const sub = (args[0] ?? "list").toLowerCase();
+
+  if (sub === "call") {
+    const exposed = args[1];
+    if (exposed === undefined) {
+      render.error("usage: weaver mcp call <mcp__server__tool> '<json arguments>'");
+      return 1;
+    }
+    const raw = args.slice(2).join(" ").trim();
+    let input: Record<string, unknown> = {};
+    if (raw.length > 0) {
+      try {
+        const parsed = JSON.parse(raw) as unknown;
+        if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+          render.error("mcp call: arguments must be a JSON object");
+          return 1;
+        }
+        input = parsed as Record<string, unknown>;
+      } catch {
+        render.error("mcp call: arguments must be valid JSON");
+        return 1;
+      }
+    }
+    const result = await callMcpTool(cfg.workspace, exposed, input, cfg.home);
+    if (result.ok) console.log(result.output);
+    else render.error(result.output);
+    return result.ok ? 0 : 1;
+  }
+
+  if (sub !== "list") {
+    render.error("usage: weaver mcp list | weaver mcp call <mcp__server__tool> '<json>'");
+    return 1;
+  }
+
+  const status = await mcpStatus(cfg.workspace, cfg.home);
+  console.log("");
+  if (status.length === 0) {
+    console.log(render.C.gray + "  no MCP servers configured. Add .weaver/mcp.json with a servers map." + render.C.reset);
+    console.log("");
+    return 0;
+  }
+  for (const server of status) {
+    if (server.error) {
+      console.log(`  ${server.server}: unavailable - ${server.error}`);
+      continue;
+    }
+    console.log(`  ${server.server}:`);
+    for (const tool of server.tools) {
+      console.log(`    ${tool.exposed}  ${tool.readOnly ? "read" : "writes"}`);
+    }
+  }
   console.log("");
   return 0;
 }

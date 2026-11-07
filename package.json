@@ -1,6 +1,6 @@
 {
   "name": "weaver",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "private": true,
   "type": "module",
   "description": "Weaver — the local-first coding agent that signs off on its own work. Weaver builds the nest; Canary guards the mine. A Zabibu Technika product.",

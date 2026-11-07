@@ -79,7 +79,7 @@ export class McpClient {
     await this.request("initialize", {
       protocolVersion: "2025-03-26",
       capabilities: {},
-      clientInfo: { name: "weaver", version: "0.8.0" },
+      clientInfo: { name: "weaver", version: "0.8.1" },
     });
     this.notify("notifications/initialized", {});
   }

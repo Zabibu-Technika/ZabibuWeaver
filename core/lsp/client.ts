@@ -131,7 +131,7 @@ export class LspClient {
     if (this.spawnError) throw this.spawnError;
     await this.request("initialize", {
       processId: process.pid,
-      clientInfo: { name: "weaver", version: "0.8.0" },
+      clientInfo: { name: "weaver", version: "0.8.1" },
       rootUri: pathToFileURL(this.root).href,
       workspaceFolders: [{ uri: pathToFileURL(this.root).href, name: "workspace" }],
       capabilities: {

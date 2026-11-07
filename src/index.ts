@@ -11,13 +11,15 @@ import { createProvider } from "./providers/index.ts";
 import { allTools } from "./tools/index.ts";
 import { createSubagentTool } from "./tools/subagent.ts";
 import { loadMcpTools } from "../core/mcp/index.ts";
-import { newAgentState, runTurn } from "./core/agent.ts";
+import { newAgentState, runSubagent, runTurn } from "./core/agent.ts";
 import { askConfirm, newSessionMeta, startRepl } from "./cli/repl.ts";
 import { loadSession, newSessionId, saveSession } from "./core/session.ts";
 import { canaryAvailable, engineLabel } from "./integrate/canary.ts";
 import {
   listModels,
   listProviders,
+  lspCommand,
+  mcpCommand,
   saveAuth,
   showCheckpoints,
   showConfig,
@@ -139,6 +141,12 @@ async function main(): Promise<void> {
     case "integrations":
       process.exitCode = await showIntegrations(config, args.commandArgs[0], args.commandArgs.slice(1));
       return;
+    case "lsp":
+      process.exitCode = await lspCommand(config, args.commandArgs);
+      return;
+    case "mcp":
+      process.exitCode = await mcpCommand(config, args.commandArgs);
+      return;
     default:
       break;
   }
@@ -167,6 +175,28 @@ async function main(): Promise<void> {
   const mcpTools = await loadMcpTools(config.workspace, config.home);
   const baseTools = [...allTools, ...mcpTools];
   const tools = [...baseTools, createSubagentTool({ provider, config, tools: baseTools })];
+
+  if (args.command === "subagent") {
+    const prompt = args.commandArgs.join(" ").trim();
+    if (prompt.length === 0) {
+      render.error("usage: weaver subagent \"<prompt>\"");
+      process.exitCode = 1;
+      return;
+    }
+    const result = await runSubagent(
+      { config, provider, tools, confirm: async () => "no", emit: render.renderEvent },
+      prompt,
+      { role: "research", maxSteps: 6 },
+    );
+    if (result.text.length > 0) {
+      console.log(result.text);
+    } else {
+      render.error("subagent returned no text.");
+      process.exitCode = 1;
+    }
+    return;
+  }
+
   const state = newAgentState();
   let meta = newSessionMeta(config, newSessionId());
 
